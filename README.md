@@ -27,7 +27,7 @@ The following code will explain a basic library usage, as per [Easynolo PHP exam
 	transactionId = "YOURORD00001"	#the transaction id in your application
 	customParameters = ""	#e.g. 'MY_CUSTOM_PARAM1=A_VALUE'
 	
-	sellaPaymentHandler = GestPayCrypt()
+	sellaPaymentHandler = gestpypay.GestPayCrypt()
 	
 	sellaPaymentHandler.Debug = True
 	sellaPaymentHandler.ProtocolAuthServer = 'https'
