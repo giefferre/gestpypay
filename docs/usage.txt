@@ -1,0 +1,59 @@
+=========
+GestPYPay
+=========
+
+
+Usage
+=====
+
+The following code will explain a basic library usage, as per Easynolo PHP example (visit http://service.easynolo.it/script/Php.html).
+
+Preparing a payment form:
+
+	# coding=utf-8
+
+	import gestpypay
+	
+	shopLogin = '9000001'	#Change with your shop login id
+	currency = '242'	#242 is for EUR
+	amount = '1.0'	#the amount to be paid - use dot for decimal digits
+	transactionId = "YOURORD00001"	#the transaction id in your application
+	customParameters = ""	#e.g. 'MY_CUSTOM_PARAM1=A_VALUE'
+	
+	sellaPaymentHandler = gestpypay.GestPayCrypt()
+	
+	sellaPaymentHandler.Debug = True
+	sellaPaymentHandler.ProtocolAuthServer = 'https'
+	sellaPaymentHandler.DomainName = 'testecomm.sella.it'
+
+	sellaPaymentHandler.SetShopLogin(shopLogin)
+	sellaPaymentHandler.SetCurrency(currency)
+	sellaPaymentHandler.SetAmount(amount)
+	sellaPaymentHandler.SetShopTransactionID(transactionId)
+	
+	sellaPaymentHandler.SetCustomInfo(customParameters)
+
+	if sellaPaymentHandler.Encrypt():
+		checkoutActionUrl = "%s://%s/gestpay/pagam.asp" % (sellaPaymentHandler.ProtocolAuthServer, sellaPaymentHandler.DomainName)
+		shopLogin = sellaPaymentHandler.GetShopLogin()
+		encryptedString = sellaPaymentHandler.GetEncryptedString()
+	else:
+		print sellaPaymentHandler.GetErrorCode()
+		print sellaPaymentHandler.GetErrorDescription()
+
+And then, in your rendered form (e.g. using Django):
+
+	<form method="post" action="{{checkoutActionUrl}}">
+		<input name="a" type="hidden" value="{{shopLogin}}" />
+		<input name="b" type="hidden" value="{{encryptedString}}" />
+		<input type="submit" value="Proceed with payment" name="submit" />
+	</form>
+
+
+You will, of course, follow the rest of the standard procedure, as described in the "GestPay - Specifiche tecniche sicurezza con crittografia" document.
+
+---
+
+(C) 2012 Gianfranco Reppucci
+gianfranco@gdlabs.it
+@giefferre
