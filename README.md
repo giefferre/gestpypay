@@ -19,8 +19,7 @@ The following code will explain a basic library usage, as per [Easynolo PHP exam
 
 ### Preparing a payment form:
 
-
-  import gestpypay
+	import gestpypay
 	
 	shopLogin = '9000001'	#Change with your shop login id
 	currency = '242'	#242 is for EUR
